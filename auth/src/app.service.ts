@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GetUserRequest } from './dto';
+import { logger } from './logger/winston';
 
 @Injectable()
 export class AppService {
@@ -16,9 +17,11 @@ export class AppService {
 
   getHello(): string {
     return 'Hello World!';
+    logger.info('success_auth');
   }
 
   getUser(getUserRequest: GetUserRequest) {
+    logger.info('success_auth');
     return this.users.find((user) => user.userId === getUserRequest.userId);
   }
 }

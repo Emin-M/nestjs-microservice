@@ -1,0 +1,8 @@
+filebeat.inputs:
+  - type: log
+    paths:
+      - /usr/share/filebeat/api/logs/api_geteaway.log
+      - /usr/share/filebeat/auth/logs/auth.log
+      - /usr/share/filebeat/billing/logs/billing.log
+output.logstash:
+  hosts: [ "logstash:5044" ]
