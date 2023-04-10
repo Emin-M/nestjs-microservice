@@ -1,11 +1,17 @@
 version: '3.7'
 services:
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./configs/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api-geteaway
+    networks:
+      - elastic
 #  ----- nest apps -----
   api-geteaway:
     build:
       context: ./api-geteaway
-    ports:
-      - "3000:3000"
     depends_on:
       - kafka
     networks:
