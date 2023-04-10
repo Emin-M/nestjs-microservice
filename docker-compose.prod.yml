@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  #  ----- nest apps -----
+  api-geteaway:
+    build:
+      args:
+        NODE_ENV: production
+  auth:
+    build:
+      args:
+        NODE_ENV: production
+  billing:
+    build:
+      args:
+        NODE_ENV: production

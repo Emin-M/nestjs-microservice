@@ -4,14 +4,8 @@ services:
   api-geteaway:
     build:
       context: ./api-geteaway
-      args:
-        NODE_ENV: development
     ports:
       - "3000:3000"
-    volumes:
-      - ./api-geteaway:/app
-      - /app/node_modules
-      - api-logs:/app/logs
     depends_on:
       - kafka
     networks:
@@ -19,14 +13,6 @@ services:
   auth:
     build:
       context: ./auth
-      args:
-        NODE_ENV: development
-    ports:
-      - "3100:3100"
-    volumes:
-      - ./auth:/app
-      - /app/node_modules
-      - auth-logs:/app/logs
     depends_on:
       - kafka
     networks:
@@ -34,14 +20,6 @@ services:
   billing:
     build:
       context: ./billing
-      args:
-        NODE_ENV: development
-    ports:
-      - "3200:3200"
-    volumes:
-      - ./billing:/app
-      - /app/node_modules
-      - billing-logs:/app/logs
     depends_on:
       - kafka
     networks:
