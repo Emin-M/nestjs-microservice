@@ -9,6 +9,13 @@ RUN if [ "$NODE_ENV" = "development" ]; \
         fi
 
 COPY . ./
+
+RUN npm install -g @nestjs/cli
+
 ENV PORT 3000
 EXPOSE $PORT
-CMD ["npm", "run","start:dev"]
+
+COPY start.sh /app
+RUN chmod +x /app/start.sh
+
+CMD ["/bin/bash", "/app/start.sh"]

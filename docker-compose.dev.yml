@@ -6,6 +6,7 @@ services:
   #  ----- nest apps -----
   api-geteaway:
     build:
+      dockerfile: Dockerfile.dev
       args:
         NODE_ENV: development
     volumes:
@@ -14,6 +15,7 @@ services:
       - api-logs:/app/logs
   auth:
     build:
+      dockerfile: Dockerfile.dev
       args:
         NODE_ENV: development
     volumes:
@@ -22,6 +24,7 @@ services:
       - auth-logs:/app/logs
   billing:
     build:
+      dockerfile: Dockerfile.dev
       args:
         NODE_ENV: development
     volumes:
