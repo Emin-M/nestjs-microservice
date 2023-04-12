@@ -8,11 +8,17 @@ services:
     build:
       args:
         NODE_ENV: production
+    volumes:
+      - api-logs:/app/logs
   auth:
     build:
       args:
         NODE_ENV: production
+    volumes:
+      - auth-logs:/app/logs
   billing:
     build:
       args:
         NODE_ENV: production
+    volumes:
+      - billing-logs:/app/logs
