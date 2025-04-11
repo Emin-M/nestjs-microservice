@@ -34,9 +34,10 @@ services:
     networks:
       - elastic
   zookeeper:
-    image: wurstmeister/zookeeper:3.4.6
+    image: bitnami/zookeeper:latest
     environment:
-      JVMFLAGS: "-Djava.security.auth.login.config=/etc/zookeeper/zookeeper_jaas.conf"
+      - JVMFLAGS=-Djava.security.auth.login.config=/etc/zookeeper/zookeeper_jaas.conf
+      - ALLOW_ANONYMOUS_LOGIN=yes  # Allow anonymous login
     volumes:
       - ./configs/zookeeper_jaas.conf:/etc/zookeeper/zookeeper_jaas.conf
     ports:
