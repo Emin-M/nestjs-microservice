@@ -3,7 +3,8 @@ services:
   nginx:
     ports:
       - "3000:80"
-  #  ----- nest apps -----
+    networks:
+      - elastic
   api-geteaway:
     build:
       dockerfile: Dockerfile.dev
@@ -13,6 +14,8 @@ services:
       - ./api-geteaway:/app
       - /app/node_modules
       - api-logs:/app/logs
+    networks:
+      - elastic
   auth:
     build:
       dockerfile: Dockerfile.dev
@@ -22,6 +25,8 @@ services:
       - ./auth:/app
       - /app/node_modules
       - auth-logs:/app/logs
+    networks:
+      - elastic
   billing:
     build:
       dockerfile: Dockerfile.dev
@@ -31,3 +36,14 @@ services:
       - ./billing:/app
       - /app/node_modules
       - billing-logs:/app/logs
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    name: elastic
+
+volumes:
+  api-logs:
+  auth-logs:
+  billing-logs:

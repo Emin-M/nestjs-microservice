@@ -8,7 +8,6 @@ services:
       - api-geteaway
     networks:
       - elastic
-#  ----- nest apps -----
   api-geteaway:
     build:
       context: ./api-geteaway
@@ -37,14 +36,13 @@ services:
     image: bitnami/zookeeper:latest
     environment:
       - JVMFLAGS=-Djava.security.auth.login.config=/etc/zookeeper/zookeeper_jaas.conf
-      - ALLOW_ANONYMOUS_LOGIN=yes  # Allow anonymous login
+      - ALLOW_ANONYMOUS_LOGIN=yes
     volumes:
       - ./configs/zookeeper_jaas.conf:/etc/zookeeper/zookeeper_jaas.conf
     ports:
       - 2181:2181
     networks:
       - elastic
-#   ----- Kafka -----
   kafka:
     image: wurstmeister/kafka:2.13-2.8.1
     depends_on:
@@ -67,7 +65,6 @@ services:
       - ./configs/kafka_server_jaas.conf:/etc/kafka/kafka_jaas.conf
     networks:
       - elastic
-#      ----- ELK + Filebeat -----
   es-node-01:
     container_name: es-node-01
     ports:
@@ -101,7 +98,6 @@ services:
       - es-node-01
     networks:
       - elastic
-
   filebeat:
     user: root
     container_name: filebeat
@@ -114,11 +110,8 @@ services:
     image: 'docker.elastic.co/beats/filebeat:7.16.2'
     depends_on:
       - kibana-01
-    #      kibana-01:
-    #        condition: service_healthy
     networks:
       - elastic
-
   logstash:
     container_name: logstash
     image: docker.elastic.co/logstash/logstash:7.16.2
@@ -133,17 +126,30 @@ services:
     depends_on:
       - es-node-01
       - kibana-01
-    #      es-node-01:
-    #        condition: service_healthy
-    #      kibana-01:
-    #        condition: service_healthy
     networks:
       - elastic
+  kafka-exporter:
+    image: danielqsj/kafka-exporter:latest
+    command:
+      - '--kafka.server=kafka:9093'
+      - '--sasl.enabled'
+      - '--sasl.username=admin'
+      - '--sasl.password=admin-secret'
+      - '--sasl.mechanism=plain'
+    ports:
+      - "9308:9308"
+    networks:
+      - elastic
+    depends_on:
+      - kafka
+    restart: on-failure
 
 networks:
   elastic:
     name: elastic
+
 volumes:
   api-logs:
   auth-logs:
   billing-logs:
+  grafana-storage:
