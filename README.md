@@ -90,17 +90,6 @@ npm install
 npm run start:dev
 ```
 
-## Contributing
-
-1. Create a feature branch
-2. Make your changes
-3. Submit a pull request
-
-## License
-
-[Add your license information here]
-
-
 #### Needed to set the below additional kafka client properties in the producer/consumer:
 
 security.protocol=SASL_PLAINTEXT
